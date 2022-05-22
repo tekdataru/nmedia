@@ -9,8 +9,6 @@ import ru.netology.nmedia.viewmodel.PostViewModel
 
 class MainActivity : AppCompatActivity() {
 
-    private var tempCount: Int = 0
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -45,30 +43,14 @@ class MainActivity : AppCompatActivity() {
                     if (post.likedByMe) R.drawable.ic_like_24 else R.drawable.ic_like_border_24
                 )
 
-                //likesText.text = stringNumberWithKInsteadOf1000(post.likes)
-
-
-                sharesImage.setOnClickListener {
-                    //post.shares++
-
-                    sharesText.text = stringNumberWithKInsteadOf1000(post.shares)
-                }
-
             }
 
             binding.likesImage.setOnClickListener{
                 viewModelLazy.onClickLike()
-                binding.viewsText.text = "" + (tempCount++)
+            }
 
-//                    if (post.likedByMe) {
-//                        post.likes--
-//                    } else {
-//                        post.likes++
-//                    }
-
-//                    post.likedByMe = !post.likedByMe
-
-
+            binding.sharesImage.setOnClickListener{
+                viewModelLazy.onClickShare()
             }
 
         }
@@ -94,6 +76,8 @@ class MainActivity : AppCompatActivity() {
 
         return "" + i
     }
+
+
 
 
 }

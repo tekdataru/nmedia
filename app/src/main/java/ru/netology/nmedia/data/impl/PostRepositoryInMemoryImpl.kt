@@ -7,26 +7,34 @@ import ru.netology.nmedia.dto.Post
 
 class PostRepositoryInMemoryImpl : PostRepository {
 
-    private val post:Post = Post(
+    private var post:Post = Post(
         id = 1,
         author = "Нетология. Университет интернет-профессий будущего",
         content = "Привет, это новая Нетология! Когда-то Нетология начиналась с интенсивов по онлайн-маркетингу. Затем появились курсы по дизайну, разработки, аналитике и управлению. Мы растем сами и помогаем расти студентам: от новичков до уверенных профессионалов.",
         published = "20 мая в 19:13",
-        likes = 99,
+        likes = 999,
         shares = 985
     )
 
 
-    override var data = MutableLiveData(post)
-
-    //override fun get(): LiveData<Post> = data
+    override val data = MutableLiveData(post)
 
     override fun like() {
 
-
-        data.value = post.copy(
-            //likes = if (post.likedByMe) post.likes - 1 else post.likes + 1,
+        post = post.copy(
+            likes= post.likes + if (post.likedByMe) -1 else 1,
             likedByMe = !post.likedByMe
         )
+
+        data.value = post
+
+    }
+
+    override fun share() {
+        post = post.copy(
+            shares = post.shares + 1
+        )
+
+        data.value = post
     }
 }
