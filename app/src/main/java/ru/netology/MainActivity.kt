@@ -74,7 +74,7 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-
+    //22.05.2022 Сделал ветку mvvm
 
 
         //Так делается с binding-
@@ -94,5 +94,6 @@ class MainActivity : AppCompatActivity() {
 
         return "" + i
     }
+
 
 }
