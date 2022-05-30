@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import ru.netology.R
 import ru.netology.databinding.ActivityMainBinding
+import ru.netology.databinding.CardPostBinding
 import ru.netology.nmedia.viewmodel.PostViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -12,8 +13,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //Так делается без binding+
-
+//        Так делается без binding+
+//
 //        setContentView(R.layout.activity_main)
 //
 //        findViewById<ImageButton>(R.id.likesImage).setOnClickListener{//println("Clicked!")
@@ -21,12 +22,12 @@ class MainActivity : AppCompatActivity() {
 //                return@setOnClickListener
 //            }
 //            it.setImageResource(R.drawable.ic_like_24)}
-        //Так делается без binding-
-
-        //Так делается c binding+
-        //Чтобы включить биндинг надо в build.gradle в разделе андроид после
-        //defaultConfig перед buildTypes написать: buildFeatures.viewBinding = true
-        val binding = ActivityMainBinding.inflate(layoutInflater)
+//        Так делается без binding-
+//
+//        Так делается c binding+
+//        Чтобы включить биндинг надо в build.gradle в разделе андроид после
+//        defaultConfig перед buildTypes написать: buildFeatures.viewBinding = true
+        /*     val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val viewModelLazy: PostViewModel by viewModels()
@@ -75,9 +76,29 @@ class MainActivity : AppCompatActivity() {
         if (iTemp > 0) return "" + iTemp + "K"
 
         return "" + i
+    }*/
+
+
+        val binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        val viewModel: PostViewModel by viewModels()
+        viewModel.data.observe(this) { posts ->
+            posts.map { post ->
+                CardPostBinding.inflate(layoutInflater, binding.container, true).apply {
+                    author.text = post.author
+                    published.text = post.published
+                    content.text = post.content
+                    like.setImageResource(
+                        if (post.likedByMe) R.drawable.ic_like_24 else R.drawable.ic_like_border_24
+                    )
+                    like.setOnClickListener {
+                        viewModel.likeById(post.id)
+                    }
+                }.root
+
+            }
+
+        }
     }
-
-
-
-
 }
