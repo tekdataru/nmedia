@@ -10,7 +10,7 @@ import ru.netology.nmedia.viewmodel.PostViewModel
 typealias OnLikeListener = (post: Post) -> Unit
 
 class PostsAdapter (private val onLikeListener: OnLikeListener): RecyclerView.Adapter<PostViewHolder>(){
-    val list = emptyList<Post>()
+    var list = emptyList<Post>()
         set(value) {
             field = value
             notifyDataSetChanged()
