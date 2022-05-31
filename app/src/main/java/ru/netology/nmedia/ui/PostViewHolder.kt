@@ -17,9 +17,9 @@ class PostViewHolder (
                     likesImage.setImageResource(
                         if (post.likedByMe) R.drawable.ic_like_24 else R.drawable.ic_like_border_24
                     )
-                    likesImage.setOnClickListener(
+                    likesImage.setOnClickListener {
                         onLikeListener(post)
-                    )
+                    }
                 }
             }
 }
