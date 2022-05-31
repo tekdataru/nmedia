@@ -83,22 +83,29 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val viewModel: PostViewModel by viewModels()
-        viewModel.data.observe(this) { posts ->
-            posts.map { post ->
-                CardPostBinding.inflate(layoutInflater, binding.container, true).apply {
-                    author.text = post.author
-                    published.text = post.published
-                    content.text = post.content
-                    like.setImageResource(
-                        if (post.likedByMe) R.drawable.ic_like_24 else R.drawable.ic_like_border_24
-                    )
-                    like.setOnClickListener {
-                        viewModel.likeById(post.id)
-                    }
-                }.root
-
-            }
-
+//        viewModel.data.observe(this) { posts ->
+//            posts.map { post ->
+//                CardPostBinding.inflate(layoutInflater, binding.container, true).apply {
+//                    author.text = post.author
+//                    published.text = post.published
+//                    content.text = post.content
+//                    likesImage.setImageResource(
+//                        if (post.likedByMe) R.drawable.ic_like_24 else R.drawable.ic_like_border_24
+//                    )
+//                    likesImage.setOnClickListener {
+//                        viewModel.likeById(post.id)
+//                    }
+//                }.root
+//
+//            }
+//
+//        }
+        val adapter = PostsAdapter{
+            viewModel.likeById(it.id)
         }
+
+        binding.list.adapter = adapter
+        viewModel.data.observe(this){posts ->
+            adapter.list = posts}
     }
 }
