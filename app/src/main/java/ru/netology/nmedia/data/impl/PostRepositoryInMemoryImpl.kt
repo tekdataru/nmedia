@@ -70,7 +70,17 @@ class PostRepositoryInMemoryImpl : PostRepository {
 
     override fun likeById(id: Long) {
         posts = posts.map{
-            if (it.id != id) it else it.copy(likedByMe = !it.likedByMe)
+            if (it.id != id) it else
+                if (it.likedByMe) it.copy(likedByMe = !it.likedByMe, likes = it.likes - 1)
+                    else it.copy(likedByMe = !it.likedByMe, likes = it.likes + 1)
+        }
+
+        data.value = posts
+    }
+
+    override fun shareById(id: Long) {
+        posts = posts.map{
+            if (it.id != id) it else it.copy( shares = it.shares + 1)
         }
 
         data.value = posts
