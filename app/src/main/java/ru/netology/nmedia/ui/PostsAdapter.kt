@@ -11,6 +11,7 @@ import ru.netology.nmedia.viewmodel.PostViewModel
 
 typealias OnLikeListener = (post: Post) -> Unit
 typealias OnShareListener = (post: Post) -> Unit
+typealias OnRemoveListener = (post: Post) -> Unit
 
 //
 //class PostsAdapter (private val onLikeListener: OnLikeListener): RecyclerView.Adapter<PostViewHolder>(){
@@ -34,12 +35,11 @@ typealias OnShareListener = (post: Post) -> Unit
 //}
 
 class PostsAdapter(
-    private val onLikeListener: OnLikeListener,
-    private val onShareListener: OnShareListener
+    private val listener: OnInteractionListener
 ) : ListAdapter<Post, PostViewHolder>(PostDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val binding = CardPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return PostViewHolder(binding, onLikeListener, onShareListener)
+        return PostViewHolder(binding, listener)
     }
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
