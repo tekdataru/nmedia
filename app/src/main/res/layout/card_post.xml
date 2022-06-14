@@ -72,16 +72,28 @@
         app:constraint_referenced_ids="content"
         />
 
-    <ImageButton
-        android:id="@+id/likesImage"
+   <!-- <ImageButton
+        android:id="@+id/likes"
         android:background="@android:color/transparent"
         android:layout_marginTop="10dp"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        app:layout_constraintTop_toBottomOf="@+id/barrierLikes"
+        app:layout_constraintTop_toBottomOf="@id/barrierLikes"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/ic_like_border_24"
-        tools:layout_editor_absoluteX="16dp" />
+        tools:layout_editor_absoluteX="16dp" />-->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/like"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checkable="true"
+        android:contentDescription="@string/description_post_like"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/barrierLikes"
+        app:icon="@drawable/ic_like_border_24"
+        style="@style/Widget.AppCompat.LikeCheckBox"
+
+        />
 
     <TextView
         android:id="@+id/likesText"
@@ -90,12 +102,12 @@
         android:layout_marginTop="10dp"
         android:layout_marginStart="5dp"
         android:text="999k"
-        app:layout_constraintBottom_toBottomOf="@+id/likesImage"
-        app:layout_constraintStart_toEndOf="@id/likesImage"
+        app:layout_constraintBottom_toBottomOf="@+id/like"
+        app:layout_constraintStart_toEndOf="@id/like"
         app:layout_constraintTop_toBottomOf="@+id/barrierLikes" />
 
     <ImageButton
-        android:id="@+id/sharesImage"
+        android:id="@+id/shares"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_marginStart="15dp"
@@ -112,8 +124,8 @@
         android:layout_marginTop="10dp"
         android:layout_marginStart="5dp"
         android:text="999k"
-        app:layout_constraintBottom_toBottomOf="@+id/sharesImage"
-        app:layout_constraintStart_toEndOf="@id/sharesImage"
+        app:layout_constraintBottom_toBottomOf="@+id/shares"
+        app:layout_constraintStart_toEndOf="@id/shares"
         app:layout_constraintTop_toBottomOf="@+id/barrierLikes" />
 
     <ImageButton

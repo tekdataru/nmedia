@@ -6,4 +6,5 @@
     <string name="textBody">Hello, this is the new Netology! Once upon a time, Netology began with online marketing intensives. Then there were courses on design, development, analytics and management. We grow ourselves and help students grow: from beginners to confident professionals.</string>
     <string name="post_text">Post text</string>
     <string name="empty_text_error">Text is empty</string>
+    <string name="description_post_like">Like by me</string>
 </resources>

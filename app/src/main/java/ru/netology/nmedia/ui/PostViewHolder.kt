@@ -21,13 +21,13 @@ class PostViewHolder(
             content.text = post.content
             likesText.text = extraViewFunctions().stringNumberWithKInsteadOf1000(post.likes)
             sharesText.text = extraViewFunctions().stringNumberWithKInsteadOf1000(post.shares)
-            likesImage.setImageResource(
-                if (post.likedByMe) R.drawable.ic_like_24 else R.drawable.ic_like_border_24
-            )
-            likesImage.setOnClickListener {
+//            like.setImageResource(
+//                if (post.likedByMe) R.drawable.ic_like_24 else R.drawable.ic_like_border_24
+//            )
+            like.setOnClickListener {
                 listener.onLike(post)
             }
-            sharesImage.setOnClickListener {
+            shares.setOnClickListener {
                 listener.onShare(post)
             }
 
