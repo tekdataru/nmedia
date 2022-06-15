@@ -19,15 +19,18 @@ class PostViewHolder(
             author.text = post.author
             published.text = post.published
             content.text = post.content
-            likesText.text = extraViewFunctions().stringNumberWithKInsteadOf1000(post.likes)
-            sharesText.text = extraViewFunctions().stringNumberWithKInsteadOf1000(post.shares)
+           // likesText.text = extraViewFunctions().stringNumberWithKInsteadOf1000(post.likes)
+            like.text = extraViewFunctions().stringNumberWithKInsteadOf1000(post.likes)
+            //sharesText.text = extraViewFunctions().stringNumberWithKInsteadOf1000(post.shares)
+            share.text = extraViewFunctions().stringNumberWithKInsteadOf1000(post.shares)
 //            like.setImageResource(
 //                if (post.likedByMe) R.drawable.ic_like_24 else R.drawable.ic_like_border_24
 //            )
+            like.isChecked = post.likedByMe
             like.setOnClickListener {
                 listener.onLike(post)
             }
-            shares.setOnClickListener {
+            share.setOnClickListener {
                 listener.onShare(post)
             }
 
