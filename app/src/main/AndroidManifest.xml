@@ -10,6 +10,24 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Nmedia">
         <activity
+            android:name=".nmedia.ui.EditPostActivity"
+            android:exported="false" />
+        <activity
+            android:name=".nmedia.ui.NewPostActivity"
+            android:exported="false" />
+        <activity
+            android:name=".nmedia.ui.IntentHandlerActivity"
+            android:exported="true"
+            android:icon="@drawable/ic_like_24">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+
+                <data android:mimeType="text/plain" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".nmedia.ui.MainActivity"
             android:exported="true">
             <intent-filter>

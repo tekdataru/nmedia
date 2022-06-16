@@ -7,4 +7,7 @@
     <string name="post_text">Post text</string>
     <string name="empty_text_error">Text is empty</string>
     <string name="description_post_like">Like by me</string>
+    <string name="remove">Remove</string>
+    <string name="edit">Edit</string>
+    <string name="blank_message_text">Text is blank!</string>
 </resources>
