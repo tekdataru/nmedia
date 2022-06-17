@@ -31,7 +31,8 @@ class PostRepositoryInMemoryImpl : PostRepository {
             content = "Привет, это новая Нетология! Когда-то Нетология начиналась с интенсивов по онлайн-маркетингу. Затем появились курсы по дизайну, разработки, аналитике и управлению. Мы растем сами и помогаем расти студентам: от новичков до уверенных профессионалов.",
             published = "20 мая в 19:13",
             likes = 999,
-            shares = 985
+            shares = 985,
+            video = "https://www.youtube.com/watch?v=WhWc3b3KhnY"
         ),
         Post(
             id = 3,
@@ -88,6 +89,15 @@ class PostRepositoryInMemoryImpl : PostRepository {
 
     override fun removeById(id: Long) {
         posts = posts.filter { it.id != id }
+        data.value = posts
+    }
+
+    override fun editById(id: Long, content: String) {
+
+        posts = posts.map {
+            if (it.id != id) it else it.copy(content = content)
+        }
+
         data.value = posts
     }
 

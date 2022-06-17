@@ -1,6 +1,7 @@
 package ru.netology.nmedia.ui
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -26,8 +27,13 @@ class MainActivity : AppCompatActivity() {
 
     private val editPostLauncher = registerForActivityResult(EditPostResultCotract()){
         val result = it ?: return@registerForActivityResult
-        viewModel.changeContent(result)
-        viewModel.save()
+
+        val arrTemp = result.split("<??!!!??>")
+
+        if (arrTemp.size != 2) return@registerForActivityResult
+
+        viewModel.editById(arrTemp[0].toLong(), arrTemp[1])
+        //viewModel.save()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -139,6 +145,11 @@ class MainActivity : AppCompatActivity() {
 //
 //                startActivity(chooserIntent)
             }
+
+            override fun onVideoLink(post: Post) {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(post.video))
+                    startActivity(intent)
+            }
         })
 
 //        binding.save.setOnClickListener {
@@ -162,6 +173,7 @@ class MainActivity : AppCompatActivity() {
 //                binding.group.visibility = View.GONE
 //            }
 //        }
+
 
         binding.buttonAdd.setOnClickListener{
             newPostLauncher.launch()

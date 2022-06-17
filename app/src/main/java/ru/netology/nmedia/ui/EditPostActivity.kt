@@ -14,6 +14,14 @@ class EditPostActivity : AppCompatActivity() {
         val binding = ActivityEditPostBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val postId = intent.getLongExtra("postId", 0)
+
+        if (postId == 0L)
+            finish()
+
+
+        binding.text.text.append(intent.getStringExtra("text"))
+
         with (binding) {
             buttonOk.setOnClickListener{
                 if (text.text.isNullOrBlank()) {
@@ -26,10 +34,12 @@ class EditPostActivity : AppCompatActivity() {
                     return@setOnClickListener
                 } else {
 
+                    intent.putExtra("postId", postId)
+                    intent.putExtra(Intent.EXTRA_TEXT, text.text.toString())
                     setResult(
                         Activity.RESULT_OK,
-                        Intent().putExtra(Intent.EXTRA_TEXT, text.text.toString())
-                    )
+                        intent)
+
                 }
 
                 finish()

@@ -12,9 +12,11 @@
         <activity
             android:name=".nmedia.ui.EditPostActivity"
             android:exported="false" />
+
         <activity
             android:name=".nmedia.ui.NewPostActivity"
             android:exported="false" />
+
         <activity
             android:name=".nmedia.ui.IntentHandlerActivity"
             android:exported="true"
@@ -27,6 +29,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".nmedia.ui.MainActivity"
             android:exported="true">

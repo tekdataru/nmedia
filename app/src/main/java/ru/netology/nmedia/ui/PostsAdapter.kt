@@ -9,9 +9,9 @@ import ru.netology.databinding.CardPostBinding
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.viewmodel.PostViewModel
 
-typealias OnLikeListener = (post: Post) -> Unit
-typealias OnShareListener = (post: Post) -> Unit
-typealias OnRemoveListener = (post: Post) -> Unit
+//typealias OnLikeListener = (post: Post) -> Unit
+//typealias OnShareListener = (post: Post) -> Unit
+//typealias OnRemoveListener = (post: Post) -> Unit
 
 //
 //class PostsAdapter (private val onLikeListener: OnLikeListener): RecyclerView.Adapter<PostViewHolder>(){
