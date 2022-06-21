@@ -1,5 +1,6 @@
 package ru.netology.nmedia.ui
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -38,6 +39,29 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        //Пример работы с Preferences+
+//        val prefs = getPreferences(Context.MODE_PRIVATE)
+//        prefs.edit().apply {
+//            putString("key", "str test")
+//            apply()
+//        }
+//
+//        val stringInPrefs = prefs.getString("key3", null)
+        //Пример работы с Preferences-
+
+        //Пример работы с Preferences с Постами+
+//        val prefs = getSharedPreferences("posts", Context.MODE_PRIVATE)
+//        prefs.edit().apply {
+//            putString("key", "str test")
+//            apply()
+//        }
+//
+//        val stringInPrefs = prefs.getString("key", null)
+//        println(stringInPrefs)
+        //Пример работы с Preferences с Постами-
+
+
 
 //        Так делается без binding+
 //

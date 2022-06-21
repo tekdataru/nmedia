@@ -1,5 +1,7 @@
 package ru.netology.nmedia.viewmodel
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import ru.netology.nmedia.data.PostRepository
@@ -14,7 +16,8 @@ private val empty = Post(
     published = ""
 )
 
-class PostViewModel : ViewModel() {
+//class PostViewModel : ViewModel() {
+class PostViewModel(application: Application) : AndroidViewModel(application) {
 
     //Упрощенный вариант создания репозитория
 //    private val repository:PostRepository = PostRepositoryInMemoryImpl()
@@ -25,7 +28,7 @@ class PostViewModel : ViewModel() {
 //    fun onClickShare() = repository.share()
 
     //Упрощенный вариант
-    private val repository: PostRepository = PostRepositoryInMemoryImpl()
+    private val repository: PostRepository = PostRepositoryInMemoryImpl(application)
     val data = repository.getAll()
     val edited = MutableLiveData(empty)
 
