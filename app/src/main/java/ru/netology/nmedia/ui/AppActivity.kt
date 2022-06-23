@@ -6,12 +6,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
 import ru.netology.R
-import ru.netology.databinding.ActivityIntentHandlerBinding
+import ru.netology.databinding.ActivityAppBinding
+//import ru.netology.databinding.ActivityIntentHandlerBinding
 
-class IntentHandlerActivity : AppCompatActivity() {
+class AppActivity : AppCompatActivity(R.layout.activity_app) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityIntentHandlerBinding.inflate(layoutInflater)
+        val binding = ActivityAppBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         if (intent.action == Intent.ACTION_SEND){
@@ -27,7 +28,7 @@ class IntentHandlerActivity : AppCompatActivity() {
                     .show()
             }
 
-            binding.text.text = text
+            //binding.text.text = text
         }
     }
 }
