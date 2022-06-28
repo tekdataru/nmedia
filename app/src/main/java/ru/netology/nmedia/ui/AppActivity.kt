@@ -9,7 +9,7 @@ import ru.netology.R
 import ru.netology.databinding.ActivityAppBinding
 //import ru.netology.databinding.ActivityIntentHandlerBinding
 
-class AppActivity : AppCompatActivity(R.layout.activity_app) {
+class AppActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityAppBinding.inflate(layoutInflater)
