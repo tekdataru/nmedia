@@ -9,7 +9,7 @@ import com.google.gson.reflect.TypeToken
 import ru.netology.nmedia.data.PostRepository
 import ru.netology.nmedia.dto.Post
 
-class PostRepositoryInMemoryImpl (
+class PostRepositoryInFilesImpl (
     private val context: Context
         ) : PostRepository {
 
@@ -174,6 +174,13 @@ class PostRepositoryInMemoryImpl (
         }
 
         data.value = posts
+    }
+
+    override fun getPostById(id: Long): Post {
+        val post1Element = posts.filter { it.id == id }
+        //if (post1Element.size == 0) return null
+
+        return post1Element.first()
     }
 
 

@@ -28,6 +28,9 @@ class PostViewHolder(
 //                if (post.likedByMe) R.drawable.ic_like_24 else R.drawable.ic_like_border_24
 //            )
             like.isChecked = post.likedByMe
+
+            if (post.video.isNullOrBlank()) groupVideo.visibility = View.GONE else groupVideo.visibility = View.VISIBLE
+
             like.setOnClickListener {
                 listener.onLike(post)
             }
@@ -35,8 +38,6 @@ class PostViewHolder(
             share.setOnClickListener {
                 listener.onShare(post)
             }
-
-            if (post.video.isNullOrBlank()) groupVideo.visibility = View.GONE else groupVideo.visibility = View.VISIBLE
 
             videoPlayButton.setOnClickListener{
                 listener.onVideoLink(post)

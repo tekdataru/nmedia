@@ -35,5 +35,9 @@
         android:name="ru.netology.nmedia.ui.PostCardFragment"
         android:label="card_post"
 
-        tools:layout="@layout/card_post" />
+        tools:layout="@layout/card_post" >
+        <action
+            android:id="@+id/action_postCardFragment_to_editPostFragment"
+            app:destination="@id/editPostFragment" />
+    </fragment>
 </navigation>
