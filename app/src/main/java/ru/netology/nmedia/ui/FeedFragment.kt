@@ -24,24 +24,33 @@ import ru.netology.nmedia.viewmodel.PostViewModel
 
 class FeedFragment : Fragment() {
 
+    companion object {
+        var Bundle.textArg: String?
+            get() = getString("textArg")
+            set(value) = putString("textArg", value)
+        var Bundle.postIdArg: Long
+            get() = getLong("postIdArg")
+            set(value) = putLong("postIdArg", value)
+    }
+
     private val viewModel: PostViewModel by viewModels(ownerProducer = ::requireParentFragment)
 
-    private val newPostLauncher = registerForActivityResult(NewPostResultContract()) {
-        val result = it ?: return@registerForActivityResult
-        viewModel.changeContent(result)
-        viewModel.save()
-    }
-
-    private val editPostLauncher = registerForActivityResult(EditPostResultCotract()) {
-        val result = it ?: return@registerForActivityResult
-
-        val arrTemp = result.split("<??!!!??>")
-
-        if (arrTemp.size != 2) return@registerForActivityResult
-
-        viewModel.editById(arrTemp[0].toLong(), arrTemp[1])
-        //viewModel.save()
-    }
+//    private val newPostLauncher = registerForActivityResult(NewPostResultContract()) {
+//        val result = it ?: return@registerForActivityResult
+//        viewModel.changeContent(result)
+//        viewModel.save()
+//    }
+//
+//    private val editPostLauncher = registerForActivityResult(EditPostResultCotract()) {
+//        val result = it ?: return@registerForActivityResult
+//
+//        val arrTemp = result.split("<??!!!??>")
+//
+//        if (arrTemp.size != 2) return@registerForActivityResult
+//
+//        viewModel.editById(arrTemp[0].toLong(), arrTemp[1])
+//        //viewModel.save()
+//    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,7 +62,12 @@ class FeedFragment : Fragment() {
         val adapter = PostsAdapter(object : OnInteractionListener {
             override fun onEdit(post: Post) {
                 //viewModel.edit(post)
-                editPostLauncher.launch(post)
+                //editPostLauncher.launch(post)
+                findNavController().navigate(R.id.action_feedFragment_to_editPostFragment,
+                    Bundle().apply {
+                        textArg = post.content
+                        postIdArg = post.id
+                    })
             }
 
             override fun onLike(post: Post) {
@@ -79,6 +93,10 @@ class FeedFragment : Fragment() {
             override fun onVideoLink(post: Post) {
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(post.video))
                 startActivity(intent)
+            }
+
+            override fun onOpenPost(post: Post) {
+                findNavController().navigate(R.id.action_feedFragment_to_postCardFragment)
             }
         })
 

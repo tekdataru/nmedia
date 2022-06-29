@@ -46,6 +46,10 @@ class PostViewHolder(
                 listener.onVideoLink(post)
             }
 
+            rootXmlElement.setOnClickListener {
+                listener.onOpenPost(post)
+            }
+
             menu.setOnClickListener {
                 PopupMenu(it.context, it).apply {
                     inflate(R.menu.options_post)

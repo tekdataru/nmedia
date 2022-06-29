@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Nmedia">
         <activity
-            android:name=".nmedia.ui.EditPostActivity"
+            android:name=".nmedia.ui.EditPostFragment"
             android:exported="false" />
 
 
