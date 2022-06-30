@@ -44,10 +44,10 @@ class PostCardFragment : Fragment() {
 
         viewModel.data.observe(viewLifecycleOwner) { posts ->
             //adapter.list = posts}
-//            val post2 = posts.filter { it.id == postId }.first()
+            val post = posts.first { it.id == postId }
 //            binding.like.text = extraViewFunctions().stringNumberWithKInsteadOf1000(post2.likes)
 //
-            val post = viewModel.getPostById(postId)
+            //val post = viewModel.getPostById(postId)
 
             with(binding) {
                 author.text = post.author
