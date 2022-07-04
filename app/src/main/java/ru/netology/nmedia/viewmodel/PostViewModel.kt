@@ -5,7 +5,9 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import ru.netology.nmedia.data.PostRepository
 import ru.netology.nmedia.data.impl.PostRepositoryInFilesImpl
+import ru.netology.nmedia.data.impl.PostRepositorySQLiteImpl
 import ru.netology.nmedia.dto.Post
+import ru.netology.nmedia.sql.AppDb
 
 private val empty = Post(
     id = 0,
@@ -27,7 +29,10 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
 //    fun onClickShare() = repository.share()
 
     //Упрощенный вариант
-    private val repository: PostRepository = PostRepositoryInFilesImpl(application)
+    //private val repository: PostRepository = PostRepositoryInFilesImpl(application)
+    private val repository: PostRepository = PostRepositorySQLiteImpl(
+        AppDb.getInstance(application).postDao
+    )
     val data = repository.getAll()
     val edited = MutableLiveData(empty)
 
