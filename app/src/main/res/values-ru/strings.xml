@@ -10,5 +10,7 @@
     <string name="description_post_like">Лайкнуто мной</string>
     <string name="remove">Удалить</string>
     <string name="edit">Изменить</string>
-    <string name="blank_message_text">Text is blank!</string>
+    <string name="blank_message_text">Текст не заполнен!</string>
+    <string name="textEditPost">Редактирование поста</string>
+    <string name="textNewPost">Новый пост</string>
 </resources>

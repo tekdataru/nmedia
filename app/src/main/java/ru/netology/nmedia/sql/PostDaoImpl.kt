@@ -8,7 +8,9 @@ import android.provider.Settings.Global.getInt
 import android.provider.Settings.Global.getString
 import ru.netology.nmedia.dto.Post
 import java.lang.Long.getLong
+import java.text.SimpleDateFormat
 import java.time.LocalDateTime
+import java.util.*
 
 class PostDaoImpl(private val db: SQLiteDatabase) : PostDao {
     companion object {
@@ -70,10 +72,12 @@ class PostDaoImpl(private val db: SQLiteDatabase) : PostDao {
                 put(PostColumns.COLUMN_ID, post.id)
             }
 
+            val currentDate = SimpleDateFormat("dd-MM-yyyy HH:ss:mm", Locale.getDefault()).format(Date());
+
             //TODO remove hardcoded values
             put(PostColumns.COLUMN_AUTHOR, "Me")
             put(PostColumns.COLUMN_CONTENT, post.content)
-            put(PostColumns.COLUMN_PUBLISHED, LocalDateTime.now().toString())
+            put(PostColumns.COLUMN_PUBLISHED, currentDate)
             put(PostColumns.COLUMN_LIKED_BY_ME, post.likedByMe)
             put(PostColumns.COLUMN_LIKES, post.likes)
             put(PostColumns.COLUMN_SHARES, post.shares)
@@ -102,6 +106,16 @@ class PostDaoImpl(private val db: SQLiteDatabase) : PostDao {
                 UPDATE posts SET
                     likes = likes + CASE WHEN likedByMe THEN -1 ELSE 1 END,
                     likedByMe = CASE WHEN likedByMe THEN 0 ELSE 1 END
+                    WHERE id = ?;
+            """.trimIndent(), arrayOf(id)
+        )
+    }
+
+    override fun shareById(id: Long) {
+        db.execSQL(
+            """
+                UPDATE posts SET
+                    shares = shares + 1
                     WHERE id = ?;
             """.trimIndent(), arrayOf(id)
         )

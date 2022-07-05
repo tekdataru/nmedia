@@ -10,4 +10,6 @@
     <string name="remove">Remove</string>
     <string name="edit">Edit</string>
     <string name="blank_message_text">Text is blank!</string>
+    <string name="textEditPost">Edit post</string>
+    <string name="textNewPost">New post</string>
 </resources>

@@ -35,9 +35,7 @@ class NewPostFragment : Fragment() {
                 buttonOkListener(it, text)
             }
 
-            buttonOkOnTop.setOnClickListener{
-                buttonOkListener(it, text)
-            }
+
         }
 
 
