@@ -19,15 +19,29 @@ class PostRepositorySQLiteImpl(
 
     override fun getAll(): LiveData<List<Post>> = data
     override fun getPostById(id: Long): Post {
-        TODO("Not yet implemented")
+        val post1Element = posts.filter { it.id == id }
+        //if (post1Element.size == 0) return null
+
+        return post1Element.first()
     }
 
     override fun likeById(id: Long) {
-        TODO("Not yet implemented")
+        posts = posts.map {
+            if (it.id != id) it else
+                if (it.likedByMe) it.copy(likedByMe = !it.likedByMe, likes = it.likes - 1)
+                else it.copy(likedByMe = !it.likedByMe, likes = it.likes + 1)
+        }
+
+        data.value = posts
+
     }
 
     override fun shareById(id: Long) {
-        TODO("Not yet implemented")
+        posts = posts.map {
+            if (it.id != id) it else it.copy(shares = it.shares + 1)
+        }
+
+        data.value = posts
     }
 
     override fun save(post: Post) {
@@ -43,11 +57,16 @@ class PostRepositorySQLiteImpl(
     }
 
     override fun removeById(id: Long) {
-        TODO("Not yet implemented")
+        posts = posts.filter { it.id != id }
+        data.value = posts
     }
 
     override fun editById(id: Long, content: String) {
-        TODO("Not yet implemented")
+        posts = posts.map {
+            if (it.id != id) it else it.copy(content = content)
+        }
+
+        data.value = posts
     }
 
 }

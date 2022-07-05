@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -30,34 +32,25 @@ class NewPostFragment : Fragment() {
 
         with (binding) {
             buttonOk.setOnClickListener{
-              viewModel.changeContent(text.text.toString())
-              viewModel.save()
+                buttonOkListener(it, text)
+            }
 
-              AndroidUtils.hideKeyboard(requireView())
-              findNavController().navigateUp()
-
-//                if (text.text.isNullOrBlank()) {
-//                    Toast.makeText(
-//                        this@NewPostFragment,
-//                        getString(R.string.empty_text_error),
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-//                    activity?.setResult(Activity.RESULT_CANCELED)
-//                    return@setOnClickListener
-//                } else {
-//
-//                    activity?.setResult(Activity.RESULT_OK,
-//                            Intent().putExtra(Intent.EXTRA_TEXT, text.text.toString())
-//                    )
-//                }
-//
-//                findNavController().navigateUp()
+            buttonOkOnTop.setOnClickListener{
+                buttonOkListener(it, text)
             }
         }
 
 
 
         return binding.root
+    }
+
+    private fun buttonOkListener(view: View, editText: EditText) {
+        viewModel.changeContent(editText.text.toString())
+        viewModel.save()
+
+        AndroidUtils.hideKeyboard(requireView())
+        findNavController().navigateUp()
     }
 
 

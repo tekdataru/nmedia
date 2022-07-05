@@ -8,9 +8,22 @@ import android.provider.Settings.Global.getInt
 import android.provider.Settings.Global.getString
 import ru.netology.nmedia.dto.Post
 import java.lang.Long.getLong
+import java.time.LocalDateTime
 
 class PostDaoImpl(private val db: SQLiteDatabase) : PostDao {
-    companion object {}
+    companion object {
+        val DDL = """
+            CREATE TABLE ${PostColumns.TABLE} (
+            ${PostColumns.COLUMN_ID} INTEGER PRIMARY KEY AUTOINCREMENT,
+            ${PostColumns.COLUMN_AUTHOR} TEXT NOT NULL,
+            ${PostColumns.COLUMN_CONTENT} TEXT NOT NULL,
+            ${PostColumns.COLUMN_PUBLISHED} TEXT NOT NULL,
+            ${PostColumns.COLUMN_LIKED_BY_ME} BOOLEAN NOT NULL DEFAULT 0,
+            ${PostColumns.COLUMN_LIKES} INTEGER NOT NULL DEFAULT 0,
+            ${PostColumns.COLUMN_SHARES} INTEGER NOT NULL DEFAULT 0
+            );
+        """.trimIndent()
+    }
 
     object PostColumns {
         const val TABLE = "posts"
@@ -20,13 +33,15 @@ class PostDaoImpl(private val db: SQLiteDatabase) : PostDao {
         const val COLUMN_PUBLISHED = "published"
         const val COLUMN_LIKED_BY_ME = "likedByMe"
         const val COLUMN_LIKES = "likes"
+        const val COLUMN_SHARES = "shares"
         val ALL_COLUMNS = arrayOf(
             COLUMN_ID,
             COLUMN_AUTHOR,
             COLUMN_CONTENT,
             COLUMN_PUBLISHED,
             COLUMN_LIKED_BY_ME,
-            COLUMN_LIKES
+            COLUMN_LIKES,
+            COLUMN_SHARES
         )
     }
 
@@ -45,6 +60,8 @@ class PostDaoImpl(private val db: SQLiteDatabase) : PostDao {
                 posts.add(map(it))
             }
         }
+
+        return posts
     }
 
     override fun save(post: Post): Post {
@@ -54,9 +71,12 @@ class PostDaoImpl(private val db: SQLiteDatabase) : PostDao {
             }
 
             //TODO remove hardcoded values
-            put(PostColumns.COLUMN_AUTHOR."Me")
+            put(PostColumns.COLUMN_AUTHOR, "Me")
             put(PostColumns.COLUMN_CONTENT, post.content)
-            put(PostColumns.COLUMN_PUBLISHED, "now")
+            put(PostColumns.COLUMN_PUBLISHED, LocalDateTime.now().toString())
+            put(PostColumns.COLUMN_LIKED_BY_ME, post.likedByMe)
+            put(PostColumns.COLUMN_LIKES, post.likes)
+            put(PostColumns.COLUMN_SHARES, post.shares)
         }
 
         val id = db.replace(PostColumns.TABLE, null, values)
@@ -96,7 +116,7 @@ class PostDaoImpl(private val db: SQLiteDatabase) : PostDao {
     }
 
     private fun map(cursor: Cursor): Post {
-        with(cursor: Cursor): Post {
+        with(cursor) {
             return Post(
                 id = getLong(getColumnIndexOrThrow(PostColumns.COLUMN_ID)),
                 author = getString(getColumnIndexOrThrow(PostColumns.COLUMN_AUTHOR)),
@@ -104,12 +124,13 @@ class PostDaoImpl(private val db: SQLiteDatabase) : PostDao {
                 published = getString(getColumnIndexOrThrow(PostColumns.COLUMN_PUBLISHED)),
                 likedByMe = getInt(getColumnIndexOrThrow(PostColumns.COLUMN_LIKED_BY_ME)) != 0,
                 likes = getInt(getColumnIndexOrThrow(PostColumns.COLUMN_LIKES)),
+                shares = getInt(getColumnIndexOrThrow(PostColumns.COLUMN_SHARES)),
             )
         }
     }
 
-    private fun getColumnIndexOrThrow(columnName) {
-        //TODO ("Cltkfnm")
-    }
+//    private fun getColumnIndexOrThrow(columnName) {
+//        //TODO ("Cltkfnm")
+//    }
 
 }

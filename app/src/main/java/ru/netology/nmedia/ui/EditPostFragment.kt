@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -69,6 +70,32 @@ class EditPostFragment : Fragment() {
                 findNavController().navigateUp()
             }
 
+            buttonOkOnTop.setOnClickListener{
+                if (text.text.isNullOrBlank()) {
+//                    Toast.makeText(
+//                        this@EditPostFragment,
+//                        getString(R.string.empty_text_error),
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+                    //setResult(Activity.RESULT_CANCELED)
+                    findNavController().navigateUp()
+                    //return@setOnClickListener
+                } else {
+
+//                    intent.putExtra("postId", postId)
+//                    intent.putExtra(Intent.EXTRA_TEXT, text.text.toString())
+//                    setResult(
+//                        Activity.RESULT_OK,
+//                        intent
+//                    )
+
+                    viewModel.editById(arguments?.postIdArg ?: 0, text.text.toString())
+
+                }
+
+                findNavController().navigateUp()
+            }
+
 
 
             return binding.root
@@ -78,6 +105,8 @@ class EditPostFragment : Fragment() {
     }
 
 }
+
+
 
 //class EditPostFragment : AppCompatActivity() {
 //    override fun onCreate(savedInstanceState: Bundle?) {
