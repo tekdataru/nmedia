@@ -31,7 +31,7 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
     //Упрощенный вариант
     //private val repository: PostRepository = PostRepositoryInFilesImpl(application)
     private val repository: PostRepository = PostRepositorySQLiteImpl(
-        AppDb.getInstance(application).postDao
+        AppDb.getInstance(application).postDao()
     )
     val data = repository.getAll()
     val edited = MutableLiveData(empty)
