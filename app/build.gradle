@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'org.jetbrains.kotlin.kapt'
 }
 
 android {
@@ -62,4 +63,8 @@ dependencies {
     def nav_ver = "2.3.4"
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_ver"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_ver"
+
+    def room_ver = "2.3.0"
+    implementation "androidx.room:room-runtime:$room_ver"
+    kapt "androidx.room:room-compiler:$room_ver"
 }
