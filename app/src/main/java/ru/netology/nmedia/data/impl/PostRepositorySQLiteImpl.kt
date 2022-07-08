@@ -42,7 +42,7 @@ class PostRepositorySQLiteImpl(
     }
 
     override fun editById(id: Long, content: String) {
-
+        dao.updateContentById(id, content)
     }
 
 
