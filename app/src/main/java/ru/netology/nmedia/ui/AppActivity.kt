@@ -8,6 +8,7 @@ import android.widget.Toast
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.messaging.FirebaseMessaging
 import ru.netology.R
 import ru.netology.databinding.ActivityAppBinding
 //import ru.netology.databinding.ActivityIntentHandlerBinding
@@ -34,6 +35,11 @@ class AppActivity : AppCompatActivity() {
             //binding.text.text = text
         }
         checkGoogleApiAvailability()
+
+        FirebaseMessaging.getInstance().token.addOnSuccessListener {
+            println(it)
+        }
+
     }
 
     private fun checkGoogleApiAvailability() {

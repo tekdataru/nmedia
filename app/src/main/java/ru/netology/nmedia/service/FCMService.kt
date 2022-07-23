@@ -40,6 +40,9 @@ class FCMService : FirebaseMessagingService() {
               Action.LIKE -> handleLike(gson.fromJson(message.data[content], Like::class.java))
            }
         }
+
+        println(message.toString())
+        //message.
     }
 
     override fun onNewToken(token: String) {
