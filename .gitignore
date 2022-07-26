@@ -16,3 +16,4 @@ local.properties
 /app/google-services.json
 /app/src/main/java/ru/netology/nmedia/toGitIgnore.kt
 /app/src/main/java/toGitIgnore.kt
+/app/fcm.json
