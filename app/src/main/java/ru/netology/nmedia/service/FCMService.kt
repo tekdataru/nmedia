@@ -37,14 +37,16 @@ class FCMService : FirebaseMessagingService() {
     override fun onMessageReceived(message: RemoteMessage) {
 
         message.data[action]?.let {
-           when (Action.valueOf(it)) {
-              Action.LIKE -> handleLike(gson.fromJson(message.data[content], Like::class.java))
-           }
+            when (Action.valueOf(it)) {
+                Action.LIKE -> handleLike(gson.fromJson(message.data[content], Like::class.java))
+            }
         }
 
-        applicationContext.let { Toast.makeText(it, "Notification! Push!", Toast.LENGTH_LONG).show() }
+        //Toast.makeText(this, "Notification! Push!", Toast.LENGTH_LONG).show()
         println("!!!!!!!!!!!!!!!!!!!!!!!************" + message.toString())
         //message.
+
+        showTestNotification(message.toString())
     }
 
     override fun onNewToken(token: String) {
@@ -66,6 +68,31 @@ class FCMService : FirebaseMessagingService() {
 
         NotificationManagerCompat.from(this)
             .notify(Random.nextInt(100_000), notification)
+    }
+
+    public fun showTestNotification(textOfNotification: String)
+    {
+        val action = "action"
+        val content = "content"
+        val channelId = "remote"
+        val gson = Gson()
+
+
+
+
+            val notification = NotificationCompat.Builder(this, channelId)
+                .setSmallIcon(R.drawable.ic_notification)
+                .setContentTitle(
+                    textOfNotification
+                )
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .build()
+
+
+            NotificationManagerCompat.from(this)
+                .notify(Random.nextInt(100_000), notification)
+
+
     }
 }
 
