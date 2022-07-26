@@ -67,6 +67,7 @@ class PostCardFragment : Fragment() {
 
                 like.setOnClickListener {
                     viewModel.likeById(post.id)
+                    context.let { PushSender().sendPushLikeTest(it, post) }
                 }
 
                 share.setOnClickListener {

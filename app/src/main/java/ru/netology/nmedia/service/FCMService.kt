@@ -4,6 +4,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
+import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.google.firebase.messaging.FirebaseMessagingService
@@ -41,7 +42,8 @@ class FCMService : FirebaseMessagingService() {
            }
         }
 
-        println(message.toString())
+        applicationContext.let { Toast.makeText(it, "Notification! Push!", Toast.LENGTH_LONG).show() }
+        println("!!!!!!!!!!!!!!!!!!!!!!!************" + message.toString())
         //message.
     }
 

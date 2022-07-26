@@ -6,12 +6,13 @@ import com.google.android.material.internal.ContextUtils
 import com.google.firebase.FirebaseApp
 import com.google.firebase.FirebaseOptions
 import com.google.firebase.messaging.FirebaseMessaging
+import ru.netology.nmedia.dto.Post
 import java.io.FileInputStream
 
 class PushSender {
 
-   fun sendPushLikeTest(someContext: Context?){
-        Toast.makeText(someContext, "1111!", Toast.LENGTH_LONG).show()
+   fun sendPushLikeTest(someContext: Context?, post: Post){
+        Toast.makeText(someContext, "Like on post (id ${post.id})!", Toast.LENGTH_LONG).show()
 
     }
 
