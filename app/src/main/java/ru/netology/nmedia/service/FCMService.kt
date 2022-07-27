@@ -42,11 +42,17 @@ class FCMService : FirebaseMessagingService() {
             }
         }
 
+        message.data[action]?.let {
+            when (Action.valueOf(it)) {
+                Action.NEW_POST -> handleNewPost(gson.fromJson(message.data[content], NewPost::class.java))
+            }
+        }
+
         //Toast.makeText(this, "Notification! Push!", Toast.LENGTH_LONG).show()
         println("!!!!!!!!!!!!!!!!!!!!!!!************" + message.toString())
         //message.
 
-        showTestNotification(message.toString())
+        //showTestNotification(message.toString())
     }
 
     override fun onNewToken(token: String) {
@@ -63,6 +69,25 @@ class FCMService : FirebaseMessagingService() {
                     content.postAuthor,
                 )
             )
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .build()
+
+        NotificationManagerCompat.from(this)
+            .notify(Random.nextInt(100_000), notification)
+    }
+
+    private fun handleNewPost(content: NewPost) {
+        val notification = NotificationCompat.Builder(this, channelId)
+            .setSmallIcon(R.drawable.ic_notification)
+            .setContentTitle(
+                getString(
+                    R.string.notification_new_post,
+                    content.userName,
+                    content.postAuthor,
+                )
+            ).setContentText(content.postContent)
+            .setStyle(NotificationCompat.BigTextStyle()
+                .bigText(content.postContent))
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .build()
 
@@ -98,6 +123,7 @@ class FCMService : FirebaseMessagingService() {
 
 enum class Action {
     LIKE,
+    NEW_POST,
 }
 
 data class Like(
@@ -105,5 +131,13 @@ data class Like(
     val userName: String,
     val postId: Long,
     val postAuthor: String,
+)
+
+data class NewPost(
+    val userId: Long,
+    val userName: String,
+    val postId: Long,
+    val postAuthor: String,
+    val postContent: String,
 )
 

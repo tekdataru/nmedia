@@ -15,5 +15,6 @@
     <string name="textNewPost">Новый пост</string>
     <string name="channel_remote_name">channel_remote_name</string>
     <string name="channel_remote_description">channel_remote_description</string>
-    <string name="notification_user_liked">notification_user_liked</string>
+    <string name="notification_user_liked">"Уведомление о новом лайке!</string>
+    <string name="notification_new_post">Добавлен новый пост!</string>
 </resources>

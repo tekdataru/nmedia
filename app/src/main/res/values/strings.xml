@@ -14,5 +14,6 @@
     <string name="textNewPost">New post</string>
     <string name="channel_remote_name">channel_remote_name</string>
     <string name="channel_remote_description">channel_remote_description</string>
-    <string name="notification_user_liked">notification_user_liked</string>
+    <string name="notification_user_liked">notification user liked!</string>
+    <string name="notification_new_post">New post added!</string>
 </resources>

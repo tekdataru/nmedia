@@ -11,10 +11,9 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.google.gson.Gson
 import ru.netology.R
 import ru.netology.nmedia.dto.Post
-import java.io.FileInputStream
 import kotlin.random.Random
-import com.google.auth.oauth2.GoogleCredentials
-import com.google.firebase.messaging.Message
+
+
 
 
 class PushSender {
@@ -35,25 +34,28 @@ class PushSender {
                .build()
            NotificationManagerCompat.from(it)
                 .notify(Random.nextInt(100_000), notification)}
-       sendPushLike()
+
     }
 
     fun sendPushLike(){
-        val options = FirebaseOptions.builder()
-            .setCredentials(GoogleCredentials.fromStream(FileInputStream("fcm.json")))
-            .build()
-        FirebaseApp.initializeApp(options)
-        val message = Message.builder()
-            .putData("action", "LIKE")
-            .putData("content", """{
-          "userId": 1,
-          "userName": "Vasiliy",
-          "postId": 2,
-          "postAuthor": "Netology"
-        }""".trimIndent())
-            .setToken(token)
-            .build()
 
-        FirebaseMessaging.getInstance().send(message)
+//        val token = "111"
+//
+//        val options = FirebaseOptions.builder()
+//            .setCredentials(GoogleCredentials.fromStream(FileInputStream("fcm.json")))
+//            .build()
+//        FirebaseApp.initializeApp(options)
+//        val message = Message.builder()
+//            .putData("action", "LIKE")
+//            .putData("content", """{
+//          "userId": 1,
+//          "userName": "Vasiliy",
+//          "postId": 2,
+//          "postAuthor": "Netology"
+//        }""".trimIndent())
+//            .setToken(token)
+//            .build()
+//
+//        FirebaseMessaging.getInstance().send(message)
     }
 }
