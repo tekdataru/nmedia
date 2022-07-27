@@ -79,15 +79,9 @@ class FCMService : FirebaseMessagingService() {
     private fun handleNewPost(content: NewPost) {
         val notification = NotificationCompat.Builder(this, channelId)
             .setSmallIcon(R.drawable.ic_notification)
-            .setContentTitle(
-                getString(
-                    R.string.notification_new_post,
-                    content.userName,
-                    content.postAuthor,
-                )
-            ).setContentText(content.postContent)
-            .setStyle(NotificationCompat.BigTextStyle()
-                .bigText(content.postContent))
+            .setContentTitle(content.postAuthor + " " + getString(R.string.notification_new_post))
+            .setContentText(content.postContent)
+            .setStyle(NotificationCompat.BigTextStyle().bigText(content.postContent))
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .build()
 
