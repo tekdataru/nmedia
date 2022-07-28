@@ -28,7 +28,7 @@ class PushSender {
            val notification = NotificationCompat.Builder(it, channelId)
                .setSmallIcon(R.drawable.ic_notification)
                .setContentTitle(
-                   "asdfasdf!"
+                   "It is Like! (or unlike)"
                )
                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                .build()

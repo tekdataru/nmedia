@@ -36,20 +36,30 @@ class FCMService : FirebaseMessagingService() {
 
     override fun onMessageReceived(message: RemoteMessage) {
 
-        message.data[action]?.let {
-            when (Action.valueOf(it)) {
-                Action.LIKE -> handleLike(gson.fromJson(message.data[content], Like::class.java))
+        try {
+            message.data[action]?.let {
+                when (Action.valueOf(it)) {
+                    Action.LIKE -> handleLike(
+                        gson.fromJson(
+                            message.data[content],
+                            Like::class.java
+                        )
+                    )
+                    Action.NEW_POST -> handleNewPost(
+                        gson.fromJson(
+                            message.data[content],
+                            NewPost::class.java
+                        )
+                    )
+                }
             }
+        } catch (e: Throwable) {
+              println("!!!!!!!!!!!  " + e)
         }
 
-        message.data[action]?.let {
-            when (Action.valueOf(it)) {
-                Action.NEW_POST -> handleNewPost(gson.fromJson(message.data[content], NewPost::class.java))
-            }
-        }
 
         //Toast.makeText(this, "Notification! Push!", Toast.LENGTH_LONG).show()
-        println("!!!!!!!!!!!!!!!!!!!!!!!************" + message.toString())
+        println("!!!!!!!!!!!!!!!!!!!!!!!************  " + message.toString())
         //message.
 
         //showTestNotification(message.toString())
@@ -89,27 +99,24 @@ class FCMService : FirebaseMessagingService() {
             .notify(Random.nextInt(100_000), notification)
     }
 
-    public fun showTestNotification(textOfNotification: String)
-    {
+    public fun showTestNotification(textOfNotification: String) {
         val action = "action"
         val content = "content"
         val channelId = "remote"
         val gson = Gson()
 
 
+        val notification = NotificationCompat.Builder(this, channelId)
+            .setSmallIcon(R.drawable.ic_notification)
+            .setContentTitle(
+                textOfNotification
+            )
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .build()
 
 
-            val notification = NotificationCompat.Builder(this, channelId)
-                .setSmallIcon(R.drawable.ic_notification)
-                .setContentTitle(
-                    textOfNotification
-                )
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .build()
-
-
-            NotificationManagerCompat.from(this)
-                .notify(Random.nextInt(100_000), notification)
+        NotificationManagerCompat.from(this)
+            .notify(Random.nextInt(100_000), notification)
 
 
     }
