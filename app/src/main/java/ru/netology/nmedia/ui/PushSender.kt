@@ -19,6 +19,10 @@ import kotlin.random.Random
 class PushSender {
 
    fun sendPushLikeTest(someContext: Context?, post: Post){
+       //Эта функция показывает тост и уведомление по нажатию на лайк
+       //Пока что отключим ее
+       return
+
         Toast.makeText(someContext, "Like on post (id ${post.id})!", Toast.LENGTH_LONG).show()
             val channelId = "remote"
 

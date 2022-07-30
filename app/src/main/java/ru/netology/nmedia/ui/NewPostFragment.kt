@@ -32,24 +32,22 @@ class NewPostFragment : Fragment() {
 
         with (binding) {
             buttonOk.setOnClickListener{
-                buttonOkListener(it, text)
+                viewModel.changeContent(text.text.toString())
+                viewModel.save()
+                AndroidUtils.hideKeyboard(requireView())
             }
-
-
         }
 
+        viewModel.postCreated.observe(viewLifecycleOwner) {
+            viewModel.loadPosts()
+            findNavController().navigateUp()
+        }
 
 
         return binding.root
     }
 
-    private fun buttonOkListener(view: View, editText: EditText) {
-        viewModel.changeContent(editText.text.toString())
-        viewModel.save()
 
-        AndroidUtils.hideKeyboard(requireView())
-        findNavController().navigateUp()
-    }
 
 
 //    override fun onCreate(savedInstanceState: Bundle?) {

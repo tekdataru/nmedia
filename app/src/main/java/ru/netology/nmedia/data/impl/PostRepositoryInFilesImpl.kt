@@ -7,11 +7,12 @@ import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import ru.netology.nmedia.data.PostRepository
+import ru.netology.nmedia.data.PostRepositoryInFilesUnusedJustAnExample
 import ru.netology.nmedia.dto.Post
 
 class PostRepositoryInFilesImpl (
     private val context: Context
-        ) : PostRepository {
+        ) : PostRepositoryInFilesUnusedJustAnExample {
 
 //    private var post:Post = Post(
 //        id = 1,

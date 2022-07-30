@@ -24,6 +24,10 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt')
+            manifestPlaceholders.usesCleartextTraffic = false
+        }
+        debug {
+            manifestPlaceholders.usesCleartextTraffic = true
         }
     }
     compileOptions {
@@ -78,6 +82,8 @@ dependencies {
     testImplementation "junit:junit:$junit_ver"
     androidTestImplementation "androidx.test.ext:junit:$junit_ver"
 
+    def okhttp_ver = "4.9.1"
+    implementation "com.squareup.okhttp3:okhttp:$okhttp_ver"
 
 
 }

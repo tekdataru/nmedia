@@ -16,4 +16,7 @@
     <string name="channel_remote_description">channel_remote_description</string>
     <string name="notification_user_liked">notification user liked!</string>
     <string name="notification_new_post">just add a new post:</string>
+    <string name="empty_posts">empty posts!!</string>
+    <string name="retry_loading">retry loading!!</string>
+    <string name="error_loading">error loading !!</string>
 </resources>

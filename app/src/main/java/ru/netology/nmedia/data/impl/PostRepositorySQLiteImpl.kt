@@ -4,13 +4,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import ru.netology.nmedia.data.PostRepository
+import ru.netology.nmedia.data.PostRepositoryInFilesUnusedJustAnExample
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.sql.PostDao
 import ru.netology.nmedia.sqlRoom.PostEntity
 
 class PostRepositorySQLiteImpl(
     private val dao: PostDao
-):PostRepository {
+):PostRepositoryInFilesUnusedJustAnExample {
 
 
     override fun getAll() = Transformations.map(dao.getAll()) { list ->
