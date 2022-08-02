@@ -44,6 +44,10 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
     val postCreated: LiveData<Unit>
         get() = _postCreated
 
+    init {
+        loadPosts()
+    }
+
 
     fun loadPosts() {
         thread {

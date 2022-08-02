@@ -22,6 +22,7 @@ class PostRepositoryHttpImpl:PostRepository {
         .build()
     private val gson = Gson()
     private val typeToken = object : TypeToken<List<Post>>(){}
+    private val typeTokenPost = object : TypeToken<Post>(){}
 
     companion object {
         private const val BASE_URL = "http://10.0.2.2:9999"
@@ -49,6 +50,20 @@ class PostRepositoryHttpImpl:PostRepository {
 
     override fun likeById(id: Long) {
        // dao.likeById(id)
+        val a = 1
+        val request: Request = Request.Builder()
+            .method("POST", "".toRequestBody())
+
+            .url("${BASE_URL}/api/posts/$id/likes")
+            .build()
+
+        client.newCall(request)
+            .execute()
+            .let{ it.body?.string() ?: throw RuntimeException("body is null")}
+            .let{
+                val pp = gson.fromJson(it, typeTokenPost.type)
+            }
+
     }
 
     override fun shareById(id: Long) {
