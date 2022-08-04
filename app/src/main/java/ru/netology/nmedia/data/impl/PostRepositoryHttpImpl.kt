@@ -22,7 +22,7 @@ class PostRepositoryHttpImpl:PostRepository {
         .build()
     private val gson = Gson()
     private val typeToken = object : TypeToken<List<Post>>(){}
-    private val typeTokenPost = object : TypeToken<Post>(){}
+    //private val typeTokenPost = object : TypeToken<Post::class.java>(){}
 
     companion object {
         private const val BASE_URL = "http://10.0.2.2:9999"
@@ -42,27 +42,60 @@ class PostRepositoryHttpImpl:PostRepository {
     }
 
     override fun getPostById(id: Long): Post {
-        //val post1Element = posts.filter { it.id == id }
-        //if (post1Element.size == 0) return null
+        val posts = getAll()
+
+        posts.filter { it.id == id }.first().let {
+            return it
+        }
+
+
 
         return Post(0, "", "", "")
     }
 
     override fun likeById(id: Long) {
-       // dao.likeById(id)
-        val a = 1
-        val request: Request = Request.Builder()
-            .method("POST", "".toRequestBody())
 
-            .url("${BASE_URL}/api/posts/$id/likes")
-            .build()
+        val emptyPost = Post(0, "", "", "")
 
-        client.newCall(request)
-            .execute()
-            .let{ it.body?.string() ?: throw RuntimeException("body is null")}
-            .let{
-                val pp = gson.fromJson(it, typeTokenPost.type)
-            }
+        val post = getPostById(id)
+
+        if (post.id == 0L) return
+
+        if (post.likedByMe) {
+            val request: Request = Request.Builder()
+                .method("DELETE", "".toRequestBody())
+
+                .url("${BASE_URL}/api/posts/$id/likes")
+                .build()
+
+            client.newCall(request)
+                .execute()
+                .let{ it.body?.string() ?: throw RuntimeException("body is null")}
+                .let{
+                    val pp = gson.fromJson(it, Post::class.java)
+
+                }
+
+        } else {
+            val request: Request = Request.Builder()
+                .method("POST", "".toRequestBody())
+
+                .url("${BASE_URL}/api/posts/$id/likes")
+                .build()
+
+            client.newCall(request)
+                .execute()
+                .let{ it.body?.string() ?: throw RuntimeException("body is null")}
+                .let{
+                    val pp = gson.fromJson(it, Post::class.java)
+
+                }
+        }
+
+
+
+
+
 
     }
 
@@ -95,6 +128,7 @@ class PostRepositoryHttpImpl:PostRepository {
     override fun editById(id: Long, content: String) {
 //        dao.updateContentById(id, content)
     }
+
 
 
 }
