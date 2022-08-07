@@ -13,6 +13,11 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
+        
+      - name: Decode google-services.json
+        env:
+        google_services_json: ${{ secrets.google_services_json }}
+        run: echo $google_services_json > ./app/google-services.json
 
       - name: Build
         run: |
