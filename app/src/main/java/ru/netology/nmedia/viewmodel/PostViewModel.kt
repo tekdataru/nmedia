@@ -69,8 +69,22 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
 
 
 
-        thread {  repository.likeById(id)
-            loadPosts()
+        thread {
+
+            val updatedPost = repository.likeById(id)
+
+
+            val adf = 1
+
+            if (updatedPost.id == 0L) return@thread
+
+
+            val oldPosts = _data.value?.posts.orEmpty()
+            val newPosts = oldPosts.map {
+                if (it.id == id) updatedPost else it
+            }
+            _data.postValue(FeedModel(posts = newPosts))
+
          }
     }
 

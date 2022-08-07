@@ -53,13 +53,13 @@ class PostRepositoryHttpImpl:PostRepository {
         return Post(0, "", "", "")
     }
 
-    override fun likeById(id: Long) {
+    override fun likeById(id: Long):Post {
 
         val emptyPost = Post(0, "", "", "")
 
         val post = getPostById(id)
 
-        if (post.id == 0L) return
+        if (post.id == 0L) return emptyPost
 
         if (post.likedByMe) {
             val request: Request = Request.Builder()
@@ -73,7 +73,7 @@ class PostRepositoryHttpImpl:PostRepository {
                 .let{ it.body?.string() ?: throw RuntimeException("body is null")}
                 .let{
                     val pp = gson.fromJson(it, Post::class.java)
-
+                    return pp
                 }
 
         } else {
@@ -88,12 +88,12 @@ class PostRepositoryHttpImpl:PostRepository {
                 .let{ it.body?.string() ?: throw RuntimeException("body is null")}
                 .let{
                     val pp = gson.fromJson(it, Post::class.java)
-
+                    return pp
                 }
         }
 
 
-
+        return emptyPost
 
 
 
