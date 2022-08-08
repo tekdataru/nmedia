@@ -63,12 +63,6 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun likeById(id: Long) {
-
-
-        val a = 1
-
-
-
         thread {
 
             val updatedPost = repository.likeById(id)
