@@ -80,7 +80,9 @@ dependencies {
 
     def junit_ver = "4.13.2"
     testImplementation "junit:junit:$junit_ver"
-    androidTestImplementation "androidx.test.ext:junit:$junit_ver"
+
+    def junit_ext_ver = "1.1.3"
+    androidTestImplementation "androidx.test.ext:junit:$junit_ext_ver"
 
     def okhttp_ver = "4.9.1"
     implementation "com.squareup.okhttp3:okhttp:$okhttp_ver"
