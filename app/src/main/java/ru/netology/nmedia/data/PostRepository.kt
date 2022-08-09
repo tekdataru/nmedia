@@ -17,5 +17,12 @@ interface PostRepository {
     fun removeById(id: Long)
     fun editById(id: Long, content: String)
 
+    fun getAllAsync(callback: GetAllCallback)
+
+    interface GetAllCallback {
+        fun onSuccess(posts: List<Post>) {}
+        fun onError(e: Exception) {}
+    }
+
 
 }
