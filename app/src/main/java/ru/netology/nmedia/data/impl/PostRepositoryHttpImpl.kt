@@ -1,5 +1,6 @@
 package ru.netology.nmedia.data.impl
 
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
@@ -120,11 +121,43 @@ class PostRepositoryHttpImpl : PostRepository {
 
     }
 
+    override fun likeByIdAsync(
+        id: Long,
+        likedByMe: Boolean,
+        callback: PostRepository.CallbackWithPostOnSuccess
+    ) {
+
+        val request: Request = Request.Builder()
+            .method(if (likedByMe) "POST" else "DELETE", "".toRequestBody())
+            .url("${BASE_URL}/api/posts/$id/likes")
+            .build()
+
+        client.newCall(request)
+            .enqueue(object : Callback {
+                override fun onResponse(call: Call, response: Response) {
+
+                    val body = response.body?.string() ?: throw RuntimeException("body is null")
+                    val newPost = gson.fromJson(body, Post::class.java)
+
+                    try {
+                        callback.onSuccess(newPost)
+                    } catch (e: Exception) {
+                        callback.onError(e)
+                    }
+                }
+
+                override fun onFailure(call: Call, e: IOException) {
+                    callback.onError(e)
+                }
+            })
+    }
+
     override fun shareById(id: Long) {
         //dao.shareById(id)
     }
 
     override fun save(post: Post) {
+        //До асинхронов+
         val request: Request = Request.Builder()
             .post(gson.toJson(post).toRequestBody(jsonType))
             .url("${BASE_URL}/api/slow/posts")
@@ -133,6 +166,32 @@ class PostRepositoryHttpImpl : PostRepository {
         client.newCall(request)
             .execute()
             .close()
+        //До асинхронов-
+
+    }
+
+    override fun saveAsync(post: Post, callback: PostRepository.CallbackWithNoParameters) {
+
+        val request: Request = Request.Builder()
+            .post(gson.toJson(post).toRequestBody(jsonType))
+            .url("${BASE_URL}/api/slow/posts")
+            .build()
+
+        client.newCall(request)
+            .enqueue(object : Callback {
+                override fun onResponse(call: Call, response: Response) {
+                    println("!!!!!! Response on save post in PostRepositoryImpl")
+                    callback.onSuccess()
+
+                }
+
+                override fun onFailure(call: Call, e: IOException) {
+                    // Toast.makeText(this, "some error on save in repositoryImpl", Toast.LENGTH_LONG).show()
+                    callback.onError(e)
+                    println("!!!!!! error on save post in PostRepositoryImpl")
+                }
+            }
+            )
     }
 
     override fun removeById(id: Long) {
@@ -144,6 +203,30 @@ class PostRepositoryHttpImpl : PostRepository {
         client.newCall(request)
             .execute()
             .close()
+    }
+
+    override fun removeByIdAsync(id: Long, callback: PostRepository.CallbackWithNoParameters) {
+
+        val request: Request = Request.Builder()
+            .delete()
+            .url("${BASE_URL}/api/slow/posts/$id")
+            .build()
+
+        client.newCall(request)
+            .enqueue(object : Callback {
+                override fun onResponse(call: Call, response: Response) {
+                    println("!!!!!! Response on removeByIdAsync post in PostRepositoryImpl")
+                    callback.onSuccess()
+
+                }
+
+                override fun onFailure(call: Call, e: IOException) {
+                    // Toast.makeText(this, "some error on save in repositoryImpl", Toast.LENGTH_LONG).show()
+                    callback.onError(e)
+                    println("!!!!!! error on removeByIdAsync in PostRepositoryImpl")
+                }
+            }
+            )
     }
 
     override fun editById(id: Long, content: String) {
