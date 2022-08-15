@@ -4,12 +4,14 @@ import android.system.Os.remove
 import android.view.View
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import ru.netology.R
 import ru.netology.databinding.CardPostBinding
+import ru.netology.nmedia.data.BASE_URL
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.ui.OnInteractionListener
 
-//import ru.netology.nmedia.ui.extraViewFunctions
+
 
 class PostViewHolder(
     private val binding: CardPostBinding,
@@ -43,9 +45,9 @@ class PostViewHolder(
                 listener.onVideoLink(post)
             }
 
-            videoImage.setOnClickListener {
-                listener.onVideoLink(post)
-            }
+//            videoImage.setOnClickListener {
+//                listener.onVideoLink(post)
+//            }
 
             rootXmlElement.setOnClickListener {
                 listener.onOpenPost(post)
@@ -70,6 +72,21 @@ class PostViewHolder(
                     }
                 }.show()
             }
+
+            Glide.with(avatar)
+                .load("$BASE_URL/avatars/${post.authorAvatar}")
+                .timeout(30_000)
+                .circleCrop()
+                .placeholder(R.mipmap.ic_launcher_round)
+                .into(avatar)
+
+            //attachmentImage.isVisible = post.attachment != null
+            attachmentImage.visibility = if (post.attachment == null) View.GONE else View.VISIBLE
+            Glide.with(attachmentImage)
+                .load("$BASE_URL/images/${post.attachment?.url}")
+                .timeout(30_000)
+                .placeholder(R.mipmap.ic_launcher_round)
+                .into(attachmentImage)
         }
     }
 }

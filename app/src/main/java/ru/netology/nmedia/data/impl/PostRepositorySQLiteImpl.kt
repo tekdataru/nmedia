@@ -3,6 +3,7 @@ package ru.netology.nmedia.data.impl
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
+import ru.netology.nmedia.data.EMPTY_POST
 import ru.netology.nmedia.data.PostRepository
 import ru.netology.nmedia.data.PostRepositoryInFilesUnusedJustAnExample
 import ru.netology.nmedia.dto.Post
@@ -23,7 +24,7 @@ class PostRepositorySQLiteImpl(
         //val post1Element = posts.filter { it.id == id }
         //if (post1Element.size == 0) return null
 
-        return Post(0, "", "", "")
+        return EMPTY_POST
     }
 
     override fun likeById(id: Long) {
