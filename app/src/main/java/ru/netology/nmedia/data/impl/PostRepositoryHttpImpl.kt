@@ -26,10 +26,11 @@ class PostRepositoryHttpImpl : PostRepository {
     override fun getAll(): List<Post> {
 
 
-        return client.newCall(request)
-            .execute()
-            .let { it.body?.string() ?: throw RuntimeException("body is null") }
-            .let { gson.fromJson(it, typeToken.type) }
+//        return client.newCall(request)
+//            .execute()
+//            .let { it.body?.string() ?: throw RuntimeException("body is null") }
+//            .let { gson.fromJson(it, typeToken.type) }
+        return emptyList()
     }
 
     override fun getAllAsync(callback: PostRepository.GetAllCallback) {
@@ -69,43 +70,43 @@ class PostRepositoryHttpImpl : PostRepository {
     override fun likeById(id: Long): Post {
 
         val emptyPost = EMPTY_POST
-
-        val post = getPostById(id)
-
-        if (post.id == 0L) return emptyPost
-
-        if (post.likedByMe) {
-            val request: Request = Request.Builder()
-                .method("DELETE", "".toRequestBody())
-
-                .url("${BASE_URL}/api/posts/$id/likes")
-                .build()
-
-            client.newCall(request)
-                .execute()
-                .let { it.body?.string() ?: throw RuntimeException("body is null") }
-                .let {
-                    val pp = gson.fromJson(it, Post::class.java)
-                    return pp
-                }
-
-        } else {
-            val request: Request = Request.Builder()
-                .method("POST", "".toRequestBody())
-
-                .url("${BASE_URL}/api/posts/$id/likes")
-                .build()
-
-            client.newCall(request)
-                .execute()
-                .let { it.body?.string() ?: throw RuntimeException("body is null") }
-                .let {
-                    val pp = gson.fromJson(it, Post::class.java)
-                    return pp
-                }
-        }
-
-
+//
+//        val post = getPostById(id)
+//
+//        if (post.id == 0L) return emptyPost
+//
+//        if (post.likedByMe) {
+//            val request: Request = Request.Builder()
+//                .method("DELETE", "".toRequestBody())
+//
+//                .url("${BASE_URL}/api/posts/$id/likes")
+//                .build()
+//
+//            client.newCall(request)
+//                .execute()
+//                .let { it.body?.string() ?: throw RuntimeException("body is null") }
+//                .let {
+//                    val pp = gson.fromJson(it, Post::class.java)
+//                    return pp
+//                }
+//
+//        } else {
+//            val request: Request = Request.Builder()
+//                .method("POST", "".toRequestBody())
+//
+//                .url("${BASE_URL}/api/posts/$id/likes")
+//                .build()
+//
+//            client.newCall(request)
+//                .execute()
+//                .let { it.body?.string() ?: throw RuntimeException("body is null") }
+//                .let {
+//                    val pp = gson.fromJson(it, Post::class.java)
+//                    return pp
+//                }
+//        }
+//
+//
         return emptyPost
 
 
@@ -117,29 +118,29 @@ class PostRepositoryHttpImpl : PostRepository {
         callback: PostRepository.CallbackWithPostOnSuccess
     ) {
 
-        val request: Request = Request.Builder()
-            .method(if (likedByMe) "POST" else "DELETE", "".toRequestBody())
-            .url("${BASE_URL}/api/posts/$id/likes")
-            .build()
-
-        client.newCall(request)
-            .enqueue(object : Callback {
-                override fun onResponse(call: Call, response: Response) {
-
-                    val body = response.body?.string() ?: throw RuntimeException("body is null")
-                    val newPost = gson.fromJson(body, Post::class.java)
-
-                    try {
-                        callback.onSuccess(newPost)
-                    } catch (e: Exception) {
-                        callback.onError(e)
-                    }
-                }
-
-                override fun onFailure(call: Call, e: IOException) {
-                    callback.onError(e)
-                }
-            })
+//        val request: Request = Request.Builder()
+//            .method(if (likedByMe) "POST" else "DELETE", "".toRequestBody())
+//            .url("${BASE_URL}/api/posts/$id/likes")
+//            .build()
+//
+//        client.newCall(request)
+//            .enqueue(object : Callback {
+//                override fun onResponse(call: Call, response: Response) {
+//
+//                    val body = response.body?.string() ?: throw RuntimeException("body is null")
+//                    val newPost = gson.fromJson(body, Post::class.java)
+//
+//                    try {
+//                        callback.onSuccess(newPost)
+//                    } catch (e: Exception) {
+//                        callback.onError(e)
+//                    }
+//                }
+//
+//                override fun onFailure(call: Call, e: IOException) {
+//                    callback.onError(e)
+//                }
+//            })
     }
 
     override fun shareById(id: Long) {
@@ -157,54 +158,54 @@ class PostRepositoryHttpImpl : PostRepository {
 
     }
 
-    /*  override fun saveAsync(post: Post, callback: PostRepository.CallbackWithNoParameters) {
+      override fun saveAsync(post: Post, callback: PostRepository.CallbackWithNoParameters) {
 
 
-          client.newCall(request)
-              .enqueue(object : Callback {
-                  override fun onResponse(call: Call, response: Response) {
-                      println("!!!!!! Response on save post in PostRepositoryImpl")
-                      callback.onSuccess()
-
-                  }
-
-                  override fun onFailure(call: Call, e: IOException) {
-                      // Toast.makeText(this, "some error on save in repositoryImpl", Toast.LENGTH_LONG).show()
-                      callback.onError(e)
-                      println("!!!!!! error on save post in PostRepositoryImpl")
-                  }
-              }
-              )
-      }*/
+//          client.newCall(request)
+//              .enqueue(object : Callback {
+//                  override fun onResponse(call: Call, response: Response) {
+//                      println("!!!!!! Response on save post in PostRepositoryImpl")
+//                      callback.onSuccess()
+//
+//                  }
+//
+//                  override fun onFailure(call: Call, e: IOException) {
+//                      // Toast.makeText(this, "some error on save in repositoryImpl", Toast.LENGTH_LONG).show()
+//                      callback.onError(e)
+//                      println("!!!!!! error on save post in PostRepositoryImpl")
+//                  }
+//              }
+//              )
+      }
 
     override fun removeById(id: Long) {
-        val response = PostsApi.retrofitService.delete(id)
+        val response = PostsApi.retrofitService.removeById(id)
             .execute()
 
     }
 
     override fun removeByIdAsync(id: Long, callback: PostRepository.CallbackWithNoParameters) {
 
-        val request: Request = Request.Builder()
-            .delete()
-            .url("${BASE_URL}/api/slow/posts/$id")
-            .build()
-
-        client.newCall(request)
-            .enqueue(object : Callback {
-                override fun onResponse(call: Call, response: Response) {
-                    println("!!!!!! Response on removeByIdAsync post in PostRepositoryImpl")
-                    callback.onSuccess()
-
-                }
-
-                override fun onFailure(call: Call, e: IOException) {
-                    // Toast.makeText(this, "some error on save in repositoryImpl", Toast.LENGTH_LONG).show()
-                    callback.onError(e)
-                    println("!!!!!! error on removeByIdAsync in PostRepositoryImpl")
-                }
-            }
-            )
+//        val request: Request = Request.Builder()
+//            .delete()
+//            .url("${BASE_URL}/api/slow/posts/$id")
+//            .build()
+//
+//        client.newCall(request)
+//            .enqueue(object : Callback {
+//                override fun onResponse(call: Call, response: Response) {
+//                    println("!!!!!! Response on removeByIdAsync post in PostRepositoryImpl")
+//                    callback.onSuccess()
+//
+//                }
+//
+//                override fun onFailure(call: Call, e: IOException) {
+//                    // Toast.makeText(this, "some error on save in repositoryImpl", Toast.LENGTH_LONG).show()
+//                    callback.onError(e)
+//                    println("!!!!!! error on removeByIdAsync in PostRepositoryImpl")
+//                }
+//            }
+//            )
     }
 
     override fun editById(id: Long, content: String) {
