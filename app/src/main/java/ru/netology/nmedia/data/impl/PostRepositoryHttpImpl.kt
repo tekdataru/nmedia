@@ -36,8 +36,8 @@ class PostRepositoryHttpImpl : PostRepository {
 
     override fun getAllAsync(callback: PostRepository.GetAllCallback) {
 
-        PostsApi.retrofitService.getAll()
-            .enqueue(object : retrofit2.Callback<List<Post>> {
+        PostsApi.retrofitService.getAll().enqueue(
+            object : retrofit2.Callback<List<Post>> {
                 override fun onResponse(
                     call: retrofit2.Call<List<Post>>,
                     response: retrofit2.Response<List<Post>>
