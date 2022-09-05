@@ -9,6 +9,7 @@ import com.google.gson.reflect.TypeToken
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
+import ru.netology.BuildConfig
 import ru.netology.nmedia.api.PostsApi
 import ru.netology.nmedia.api.PostsApiService
 import ru.netology.nmedia.data.EMPTY_POST
@@ -159,13 +160,23 @@ class PostRepositoryHttpImpl : PostRepository {
     }
 
       override fun saveAsync(post: Post, callback: PostRepository.CallbackWithNoParameters) {
+
           private val client = OkHttpClient.Builder()
               .connectTimeout(30, TimeUnit.SECONDS)
               .build()
 
+          private val gson = Gson()
+          private val typeToken = object : TypeToken<List<Post>>() {}
+          //private val typeTokenPost = object : TypeToken<Post::class.java>(){}
+
+//          companion object {
+//              private const val BASE_URL = "http://10.0.2.2:9999"
+//              private val jsonType = "application/json".toMediaType()
+//          }
+
           val request: Request = Request.Builder()
               .post(gson.toJson(post).toRequestBody(jsonType))
-              .url("${BASE_URL}/api/slow/posts")
+              .url("${BuildConfig.BASE_URL}/posts")
               .build()
 
           client.newCall(request)
