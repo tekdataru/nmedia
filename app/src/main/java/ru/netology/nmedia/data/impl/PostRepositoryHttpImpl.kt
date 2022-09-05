@@ -159,23 +159,30 @@ class PostRepositoryHttpImpl : PostRepository {
     }
 
       override fun saveAsync(post: Post, callback: PostRepository.CallbackWithNoParameters) {
+          private val client = OkHttpClient.Builder()
+              .connectTimeout(30, TimeUnit.SECONDS)
+              .build()
 
+          val request: Request = Request.Builder()
+              .post(gson.toJson(post).toRequestBody(jsonType))
+              .url("${BASE_URL}/api/slow/posts")
+              .build()
 
-//          client.newCall(request)
-//              .enqueue(object : Callback {
-//                  override fun onResponse(call: Call, response: Response) {
-//                      println("!!!!!! Response on save post in PostRepositoryImpl")
-//                      callback.onSuccess()
-//
-//                  }
-//
-//                  override fun onFailure(call: Call, e: IOException) {
-//                      // Toast.makeText(this, "some error on save in repositoryImpl", Toast.LENGTH_LONG).show()
-//                      callback.onError(e)
-//                      println("!!!!!! error on save post in PostRepositoryImpl")
-//                  }
-//              }
-//              )
+          client.newCall(request)
+              .enqueue(object : Callback {
+                  override fun onResponse(call: Call, response: Response) {
+                      println("!!!!!! Response on save post in PostRepositoryImpl")
+                      callback.onSuccess()
+
+                  }
+
+                  override fun onFailure(call: Call, e: IOException) {
+                      // Toast.makeText(this, "some error on save in repositoryImpl", Toast.LENGTH_LONG).show()
+                      callback.onError(e)
+                      println("!!!!!! error on save post in PostRepositoryImpl")
+                  }
+              }
+              )
       }
 
     override fun removeById(id: Long) {
