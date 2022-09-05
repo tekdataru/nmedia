@@ -161,12 +161,12 @@ class PostRepositoryHttpImpl : PostRepository {
 
       override fun saveAsync(post: Post, callback: PostRepository.CallbackWithNoParameters) {
 
-          private val client = OkHttpClient.Builder()
+          val client = OkHttpClient.Builder()
               .connectTimeout(30, TimeUnit.SECONDS)
               .build()
 
-          private val gson = Gson()
-          private val typeToken = object : TypeToken<List<Post>>() {}
+          val gson = Gson()
+          val typeToken = object : TypeToken<List<Post>>() {}
           //private val typeTokenPost = object : TypeToken<Post::class.java>(){}
 
 //          companion object {
@@ -174,9 +174,11 @@ class PostRepositoryHttpImpl : PostRepository {
 //              private val jsonType = "application/json".toMediaType()
 //          }
 
+          val jsonType = "application/json".toMediaType()
+
           val request: Request = Request.Builder()
               .post(gson.toJson(post).toRequestBody(jsonType))
-              .url("${BuildConfig.BASE_URL}/posts")
+              .url("${BuildConfig.BASE_URL}posts")
               .build()
 
           client.newCall(request)
