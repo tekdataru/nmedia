@@ -98,11 +98,34 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
 //
 //        }
 
+        //До ретрофит+
+//        val oldPosts = _data.value?.posts.orEmpty()
+//        val oldPost = oldPosts.filter { id == it.id }.first()
+//
+//        repository.likeByIdAsync(id, !oldPost.likedByMe,
+//            object : PostRepository.CallbackWithPostOnSuccess {
+//                override fun onSuccess(post: Post) {
+//                    println("!!!!!!! onSuccess in likeById in viewModel")
+//
+//                    val newPosts = oldPosts.map {
+//                        if (it.id == id) post else it
+//                    }
+//
+//
+//                    _data.postValue(FeedModel(posts = newPosts))
+//                }
+//
+//                override fun onError(e: Exception) {
+//                    println("!!!!!!! onSuccess in likeById in viewModel")
+//                }
+//            }
+//        )
+        //До ретрофит-
 
         val oldPosts = _data.value?.posts.orEmpty()
         val oldPost = oldPosts.filter { id == it.id }.first()
 
-        repository.likeByIdAsync(id, !oldPost.likedByMe,
+        repository.likeByIdRetrofit(id, !oldPost.likedByMe,
             object : PostRepository.CallbackWithPostOnSuccess {
                 override fun onSuccess(post: Post) {
                     println("!!!!!!! onSuccess in likeById in viewModel")

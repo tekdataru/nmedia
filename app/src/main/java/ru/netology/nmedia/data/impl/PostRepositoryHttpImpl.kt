@@ -144,6 +144,81 @@ class PostRepositoryHttpImpl : PostRepository {
 //            })
     }
 
+    override fun likeByIdRetrofit(
+        id: Long,
+        likedByMe: Boolean,
+        callback: PostRepository.CallbackWithPostOnSuccess
+    ) {
+
+        if (likedByMe) {
+            PostsApi.retrofitService.likeById(id).enqueue(
+                object : retrofit2.Callback<Post> {
+                    override fun onResponse(
+                        call: retrofit2.Call<Post>,
+                        response: retrofit2.Response<Post>
+                    ) {
+                        if (!response.isSuccessful) {
+                            callback.onError(RuntimeException(response.message()))
+                            return
+                        }
+
+                        callback.onSuccess(
+                            response.body() ?: throw RuntimeException("body is null")
+                        )
+                    }
+
+                    override fun onFailure(call: retrofit2.Call<Post>, t: Throwable) {
+                        TODO("Not yet implemented")
+                    }
+                })
+        } else {
+            PostsApi.retrofitService.dislikeById(id).enqueue(
+                object : retrofit2.Callback<Post> {
+                    override fun onResponse(
+                        call: retrofit2.Call<Post>,
+                        response: retrofit2.Response<Post>
+                    ) {
+                        if (!response.isSuccessful) {
+                            callback.onError(RuntimeException(response.message()))
+                            return
+                        }
+
+                        callback.onSuccess(
+                            response.body() ?: throw RuntimeException("body is null")
+                        )
+                    }
+
+                    override fun onFailure(call: retrofit2.Call<Post>, t: Throwable) {
+                        TODO("Not yet implemented")
+                    }
+                })
+        }
+
+//        val request: Request = Request.Builder()
+//            .method(if (likedByMe) "POST" else "DELETE", "".toRequestBody())
+//            .url("${BASE_URL}/api/posts/$id/likes")
+//            .build()
+//
+//        client.newCall(request)
+//            .enqueue(object : Callback {
+//                override fun onResponse(call: Call, response: Response) {
+//
+//                    val body = response.body?.string() ?: throw RuntimeException("body is null")
+//                    val newPost = gson.fromJson(body, Post::class.java)
+//
+//                    try {
+//                        callback.onSuccess(newPost)
+//                    } catch (e: Exception) {
+//                        callback.onError(e)
+//                    }
+//                }
+//
+//                override fun onFailure(call: Call, e: IOException) {
+//                    callback.onError(e)
+//                }
+//            })
+    }
+
     override fun shareById(id: Long) {
         //dao.shareById(id)
     }

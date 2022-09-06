@@ -15,6 +15,7 @@ interface PostRepository {
 
     fun getAllAsync(callback: GetAllCallback)
     fun likeByIdAsync(id: Long, likedByMe: Boolean, callback: CallbackWithPostOnSuccess)
+    fun likeByIdRetrofit(id: Long, likedByMe: Boolean, callback: CallbackWithPostOnSuccess)
     fun saveAsync(post: Post, callback: CallbackWithNoParameters)
     fun removeByIdAsync(id: Long, callback: CallbackWithNoParameters)
 
