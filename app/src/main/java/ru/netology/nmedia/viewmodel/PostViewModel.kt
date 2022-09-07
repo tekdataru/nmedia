@@ -200,10 +200,28 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
 
     fun save() {
 
+//        _data.value = FeedModel(loading = true)
+//        edited.value?.let {
+//            repository.saveAsync(it, object : PostRepository.CallbackWithNoParameters {
+//                override fun onSuccess() {
+//                    _postCreated.postValue(Unit)
+//                    println("!!!!!!!Success on save in viewModel!!!!!!!!!")
+//                }
+//
+//                override fun onError(e: Exception) {
+//                    println("!!!!!!!error on save post in viewModel!!!!!!!!!")
+//                }
+//            })
+//        }
+//
+//        edited.value = empty
+
         _data.value = FeedModel(loading = true)
         edited.value?.let {
-            repository.saveAsync(it, object : PostRepository.CallbackWithNoParameters {
-                override fun onSuccess() {
+            repository.save(it,
+                object : PostRepository.CallbackWithPostOnSuccess {
+
+                override fun onSuccess(post: Post) {
                     _postCreated.postValue(Unit)
                     println("!!!!!!!Success on save in viewModel!!!!!!!!!")
                 }
@@ -215,6 +233,8 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
         }
 
         edited.value = empty
+
+
 
     }
 

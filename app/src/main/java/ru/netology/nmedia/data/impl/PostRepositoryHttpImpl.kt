@@ -1,6 +1,7 @@
 package ru.netology.nmedia.data.impl
 
 import android.widget.Toast
+import android.widget.Toast.makeText
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
@@ -43,6 +44,11 @@ class PostRepositoryHttpImpl : PostRepository {
                     response: retrofit2.Response<List<Post>>
                 ) {
                     if (!response.isSuccessful) {
+                        if (response.code().toString().first() != '2') {
+                            getAllAsync(callback)//дз для баггисервера
+                            return
+                        }
+
                         callback.onError(RuntimeException(response.message()))
                         return
                     }
@@ -158,6 +164,10 @@ class PostRepositoryHttpImpl : PostRepository {
                         response: retrofit2.Response<Post>
                     ) {
                         if (!response.isSuccessful) {
+                            if (response.code().toString().first() != '2') {
+                                likeByIdRetrofit(id, likedByMe, callback)//дз для баггисервера
+                                return
+                            }
                             callback.onError(RuntimeException(response.message()))
                             return
                         }
@@ -179,6 +189,11 @@ class PostRepositoryHttpImpl : PostRepository {
                         response: retrofit2.Response<Post>
                     ) {
                         if (!response.isSuccessful) {
+                            if (response.code().toString().first() != '2') {
+                                likeByIdRetrofit(id, likedByMe, callback)//дз для баггисервера
+                                return
+                            }
+
                             callback.onError(RuntimeException(response.message()))
                             return
                         }
@@ -223,14 +238,32 @@ class PostRepositoryHttpImpl : PostRepository {
         //dao.shareById(id)
     }
 
-    override fun save(post: Post) {
+    override fun save(post: Post, callback: PostRepository.CallbackWithPostOnSuccess) {
         val result = PostsApi.retrofitService.save(post)
-            .execute()
-        if (!result.isSuccessful) {
-            error(result.message())
-        }
+            .enqueue(object : retrofit2.Callback<Post> {
+                override fun onResponse(
+                    call: retrofit2.Call<Post>,
+                    response: retrofit2.Response<Post>
+                ) {
+                    if (!response.isSuccessful) {
+                        if (response.code().toString().first() != '2') {
+                            save(post, callback)//дз для баггисервера
+                            return
+                        }
 
-        result.body() ?: error("Body is null")
+                        callback.onError(RuntimeException(response.message()))
+                        return
+                    }
+
+                    callback.onSuccess(
+                        response.body() ?: throw RuntimeException("body is null")
+                    )
+                }
+
+                override fun onFailure(call: retrofit2.Call<Post>, t: Throwable) {
+                    TODO("Not yet implemented")
+                }
+            })
 
     }
 
